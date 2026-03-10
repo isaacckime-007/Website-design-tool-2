@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 
-// ── DESIGN SYSTEMS ─────────────────────────────────────────────────────────────
 const DS = {
   obsidian: {
     label: "Obsidian", desc: "Dark luxury — premium brands",
@@ -98,6 +97,8 @@ function build(f) {
     coffee: "Every Sip. Perfectly Sourced.",
     cloth: "Wear What You Stand For",
     apparel: "Wear What You Stand For",
+    street: "Stand Out. Stay Bold.",
+    wear: "Wear Different. Live Bold.",
     default: `${n}. Built Different.`,
   };
   const hKey = Object.keys(headlines).find(k => catL.includes(k)) || "default";
@@ -110,7 +111,14 @@ function build(f) {
   }));
 
   const titleTag = `${n} | Premium ${cat} in ${city}${state ? ", " + state : ""}`;
-  const metaDesc = `${n} offers premium ${catL} for ${life} in ${city}${state ? ", " + state : ""}. ${diff.charAt(0).toUpperCase() + diff.slice(1)}. Shop now and feel the difference.`;
+
+  const metaFull = `${n} offers premium ${catL} for ${life} in ${city}${state ? ", " + state : ""}. ${diff.charAt(0).toUpperCase() + diff.slice(1)}. Shop now.`;
+  const metaDesc = metaFull.length > 155 ? metaFull.slice(0, 152).replace(/\s+\S*$/, "") + "..." : metaFull;
+
+  const lifeShort = life.length > 40 ? life.slice(0, 40).replace(/\s+\S*$/, "") + "..." : life;
+  const h1 = `${city} ${cat} for the Bold & Fashion-Forward`;
+  const ogDesc = `Tired of ${pain}? ${n} delivers premium ${catL} for ${lifeShort}. ${diff.charAt(0).toUpperCase() + diff.slice(1)}. Shop now.`;
+  const brandStoryTitle = `How ${n} Is Making Premium ${cat} Affordable in ${city}`;
 
   return {
     hero: {
@@ -142,15 +150,15 @@ function build(f) {
       meta: metaDesc,
       metaLen: metaDesc.length,
       keywords: kw,
-      h1: `Premium ${cat} for ${life} in ${city}`,
+      h1,
       ogTitle: `${n} — ${cat} That Actually Delivers`,
-      ogDesc: `Tired of ${pain}? ${n} was built for ${life} who want better. Shop premium ${catL} and feel the difference today.`,
+      ogDesc,
       blog: [
-        `Top 5 ${cat} for ${life} in ${city} (${new Date().getFullYear()} Guide)`,
-        `How to Choose the Right ${cat}: What ${f.age || "Smart Shoppers"} Need to Know`,
+        `Top 5 ${cat} Brands in ${city} for Skaters & Streetwear Fans (${new Date().getFullYear()})`,
+        `How to Build a Streetwear Fit on a Budget: Guide for ${f.age || "18-26"} Year Olds`,
         `Why ${city} Locals Are Choosing ${n} Over Big Brands`,
-        `${diff.charAt(0).toUpperCase() + diff.slice(1)}: The ${n} Story`,
-        `${cat} Tips for ${life}: A Complete Beginner's Guide`,
+        brandStoryTitle,
+        `Best Affordable ${cat} in ${city}: What to Look For Before You Buy`,
       ],
     },
   };
@@ -407,7 +415,7 @@ export default function App() {
             <p style={{ color: "#5a5a7a", fontSize: 14, marginBottom: 32 }}>Review before client handoff.</p>
             {[
               { label: "Page Title Tag", value: seo.title, chars: seo.titleLen, ideal: [50, 60] },
-              { label: "Meta Description", value: seo.meta, chars: seo.metaLen, ideal: [140, 165] },
+              { label: "Meta Description", value: seo.meta, chars: seo.metaLen, ideal: [140, 160] },
               { label: "Primary H1 Tag", value: seo.h1 },
               { label: "Target Keywords", value: seo.keywords },
               { label: "Open Graph Title", value: seo.ogTitle },
